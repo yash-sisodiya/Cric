@@ -202,6 +202,7 @@ export class AuthService {
           hash: hash,
         },
       });
+      delete updatedUser.hash;
       return {
         data: { ...updatedUser },
         status: 'success',
