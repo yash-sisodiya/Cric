@@ -214,10 +214,10 @@ export class AuthService {
 
   async createToken(userId: number, email: string) {
     const secret = this.config.get('JWT_SECRET');
-    let payload = { sub: userId, email };
+    let payload = { id: userId, email };
     //create a token
     const token = await this.jwt.signAsync(payload, {
-      expiresIn: '15m',
+      expiresIn: '3600m',
       secret: secret,
     });
     return token;

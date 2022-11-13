@@ -36,7 +36,6 @@ export class UserService {
         take: limit,
       });
       const totalCount = await this.prisma.user.count();
-
       return {
         result: {
           rows: users,
@@ -151,11 +150,11 @@ export class UserService {
     }
   }
 
-  async changePassword(dto: ChangePasswordDto) {
+  async changePassword(dto: ChangePasswordDto, id: number) {
     try {
       let user = await this.prisma.user.findUnique({
         where: {
-          id: dto.id,
+          id: id,
         },
       });
       // if user does not exist throw exception
@@ -169,7 +168,7 @@ export class UserService {
       const newHash = await argon.hash(dto.newPassword);
       let updatedUser = await this.prisma.user.update({
         where: {
-          id: dto.id,
+          id: id,
         },
         data: {
           hash: newHash,
